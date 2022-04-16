@@ -2,55 +2,60 @@ package graphes;
 
 import java.util.ArrayList;
 
-public class GrapheLA implements IGraph{
-	private ArrayList<Integer>[] liste;
+public class GrapheLA {
+	private ArrayList<ArrayList<Integer>> la;
 	
-	@SuppressWarnings("unchecked")
-	public GrapheLA(int nb_noeuds) {
-		liste = new ArrayList[nb_noeuds];
-		
-		for (int i = 0; i < nb_noeuds; ++i)
-			liste[i] = new ArrayList<Integer>();
+	public GrapheLA(int nbNoeuds) {
+		la = new ArrayList<>();
+		for (int i = 0; i < nbNoeuds; ++i)
+			la.add(new ArrayList<>());
 	}
 
 	public int getNbNoeuds() {
-		return liste.length;
+		return la.size();
+	}
+	
+	public boolean estArcOK(int a, int b) {
+		return estNoeudOK(a) && estNoeudOK(b);
+	}
+	
+	public boolean estNoeudOK(int n) {
+		return n >= 1 && n <= getNbNoeuds();
 	}
 
-	public void ajouterArc(int i, int j) {
-		liste[i-1].add(j);
+	public void ajouterArc(int a, int b) {
+		assert ! aArc(a,b);
+		la.get(a-1).add(b);
 	}
 
-	public boolean aArc(int i, int j) {
-		return liste[i-1].contains(j);
-	}
-
-	public int dOut(int i) {
-		return liste[i-1].size();
-	}
-
-	public int dIn(int i) {
-		int cpt = 0;
-		for (ArrayList<Integer> ar : liste)
-			if (ar.contains(i))
-				++cpt;
-			
-		return cpt;
+	public boolean aArc(int a, int b) {
+		assert estArcOK(a,b);
+		return la.get(a-1).contains(b);
 	}
 	
 	@Override
 	public String toString() {
-		StringBuilder s = new StringBuilder();
-		
-		Integer i = 1;
-		for (ArrayList<Integer> succ : liste) {
-			s.append( i.toString() + " -> ");
-			for (Integer noeud : succ)
-				s.append(noeud.toString() + " ");
-			s.append("\n");
-			++i;
+		String s = "";
+		for(int i = 0; i< la.size(); ++i) {
+			s+= (i+1) + " -> ";
+			for (Integer j : la.get(i)) 
+				s+= j + " ";
+			s+="\n";
 		}
-		
-		return s.toString();
+		return s;
+	}
+
+	public int dOut(int n) {
+		assert estNoeudOK(n);
+		return la.get(n-1).size();
+	}
+
+	public int dIn(int n) {
+		assert estNoeudOK(n);
+		int d = 0;
+		for(int i = 0; i< la.size(); ++i)
+			if (la.get(i).contains(n))
+				++d;
+		return d;
 	}
 }

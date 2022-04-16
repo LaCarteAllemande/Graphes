@@ -1,4 +1,4 @@
-package graphes.tests;
+package tests;
 
 public class Matrice {
 

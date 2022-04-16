@@ -1,59 +1,67 @@
 package graphes;
 
 public class GrapheMA implements IGraph{
-	private boolean[][] matriceAdjacence;
-	public GrapheMA(int nb_noeuds) {
-		matriceAdjacence= new boolean[nb_noeuds][nb_noeuds]; //false de base ?
-	}
+	private boolean[][] ma;
 
-	public int getNbNoeuds() {
-		return matriceAdjacence.length;
-	}
-
-	public void ajouterArc(int i, int j) {
-		matriceAdjacence[i-1][j-1]=true;
-
-	}
-
-	public boolean aArc(int i, int j) {
-		return matriceAdjacence[i-1][j-1];
-	}
-
-	public int dOut(int i) {
-		int cpt = 0;
-		for (boolean b : matriceAdjacence[i-1])
-			if (b)
-				++cpt;	
-		return cpt;
-	}
-
-	public int dIn(int i) {
-		int cpt = 0;
-		for (boolean[] b : matriceAdjacence)
-			if (b[i-1])
-				++cpt;	
-		return cpt;
+	public GrapheMA(int nbNoeuds) {
+		ma = new boolean[nbNoeuds][nbNoeuds];
 	}
 	
+	public int getNbNoeuds() { return ma.length; }
+	
+	public boolean estNoeudOK(int n) {
+		return n >= 1 && n <= getNbNoeuds();
+	}
+	
+	public boolean estArcOK(int a, int b) {
+		return estNoeudOK(a) && estNoeudOK(b);
+	}
+	
+
+
+	public void ajouterArc(int a, int b) {
+		assert estArcOK(a,b);
+		assert !ma[a-1][b-1];
+		ma[a-1][b-1] = true;
+	}
 	
 	@Override
-	public String toString()
-	{
-		StringBuilder s = new StringBuilder();
-		for (boolean[] b : matriceAdjacence)
-		{
-			for (boolean c : b)
-			{
-				if(c)
-					s.append(1);
-				else
-					s.append(0);
-				
-				s.append(" ");
-			}
-			
-			s.append("\n");
+	public String toString() {
+		String s = "";
+		for (int i = 1; i <= getNbNoeuds(); ++i) {
+			for (int j = 1; j<= getNbNoeuds(); ++j)
+				s += valeur(i,j) + " ";
+			s+="\n";
 		}
-		return s.toString();
+		return s;
+	}
+
+	public boolean aArc(int a, int b) {
+		assert estArcOK(a,b);
+		assert estNoeudOK(b);
+		return ma[a-1][b-1];
+	}
+	
+	private int valeur(int a, int b) {
+		assert estArcOK(a,b);
+		return (aArc(a,b))? 1 : 0;
+	}
+
+	public int dOut(int n) {
+		assert estNoeudOK(n);
+		int d = 0;
+		for (int i = 1; i <= getNbNoeuds(); ++i)
+			if (ma[n-1][i-1])
+				++d;
+		return d;
+	}
+
+	pu	blic int dIn(int n) {
+		assert estNoeudOK(n);
+		int d = 0;
+		for (int i = 1; i <= getNbNoeuds(); ++i)
+			if (ma[i-1][n-1])
+				++d;
+		return d;
 	}
 }
