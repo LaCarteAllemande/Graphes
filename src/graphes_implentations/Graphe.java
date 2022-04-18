@@ -1,4 +1,4 @@
-package graphes;
+package graphes_implentations;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,8 @@
-package graphes;
+package graphes_implentations;
 
 import java.util.ArrayList;
+
+import graphes.IGraph;
 
 public class GrapheLA implements IGraph{
 	private ArrayList<Integer>[] liste;

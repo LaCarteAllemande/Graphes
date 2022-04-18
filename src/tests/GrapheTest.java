@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import graphes.Graphe;
+import graphes_implentations.Graphe;
 
 class GrapheTest {
     private final static int NB_NOEUDS = 6;

@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import graphes.GrapheMA;
+import graphes_implentations.GrapheMA;
 
 class GrapheMATest {
     private final static int NB_NOEUDS = 6;

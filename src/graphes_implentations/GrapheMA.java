@@ -1,9 +1,16 @@
-package graphes;
+package graphes_implentations;
+
+import graphes.IGraph;
 
 public class GrapheMA implements IGraph{
+
 	private boolean[][] matriceAdjacence;
+	
+	
 	public GrapheMA(int nb_noeuds) {
-		matriceAdjacence= new boolean[nb_noeuds][nb_noeuds]; //false de base ?
+		matriceAdjacence = new boolean[nb_noeuds][nb_noeuds];
+		
+		
 	}
 
 	public int getNbNoeuds() {
